@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+<script>
+// ---------------------------------------------------------
+var MyPlot = function(info) {
+//
+var formData = new FormData();
+formData.append("info", "Вызов из Go R");
+//
+var xhr = new XMLHttpRequest();
+xhr.open("POST", "/getchartr");
+xhr.onload = function(e)
+{
+  if(this.readyState == 4 && this.status == 200)
+  { 
+  var sAux = this.response;
+  // alert(sAux);
+  sAux = sAux.replaceAll('image/png', 'image/svg+xml');
+  // alert(sAux);
+  document.getElementById('myimage')
+    .setAttribute(
+    'src', sAux
+    );
+  return false;
+  }
+  else
+  {
+  alert("Err!");
+  }
+return false;  
+};
+xhr.send(formData);
+return false;
+};
+</script>
+</head>
+<body>
+<h1>Внедрение элемента plot</h1>
+<div> <!--  style="width:800px;height:800px;" -->
+    <img id="myimage" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUA
+    AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
+        9TXL0Y4OHwAAAABJRU5ErkJggg==" alt="Red dot" />
+</div>
+<button onClick="var info='Вызов из Go R'; MyPlot(info); return false;">Пуск</button>
+</body>
+</html>
